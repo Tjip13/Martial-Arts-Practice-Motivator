@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martial Arts Dojo V2.6</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #1e40af, #1e3a8a, #0f172a);
+            color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .container { max-width: 28rem; margin: 0 auto; padding: 1rem; }
+        .text-center { text-align: center; }
+        .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+        .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+        .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .text-base { font-size: 1rem; line-height: 1.5rem; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-8xl { font-size: 6rem; line-height: 1; }
+        .text-6xl { font-size: 3.75rem; line-height: 1; }
+        .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+        .font-bold { font-weight: 700; }
+        .font-medium { font-weight: 500; }
+        
+        .text-yellow-400 { color: #fbbf24; }
+        .text-cyan-400 { color: #22d3ee; }
+        .text-blue-300 { color: #93c5fd; }
+        .text-blue-200 { color: #bfdbfe; }
+        .text-purple-400 { color: #c084fc; }
+        .text-green-400 { color: #4ade80; }
+        .text-white { color: #ffffff; }
+        
+        .bg-slate-800 { background-color: rgba(30, 41, 59, 0.6); }
+        .bg-slate-700 { background-color: rgba(51, 65, 85, 0.8); }
+        .bg-slate-600 { background-color: #475569; }
+        .border { border-width: 1px; }
+        .border-2 { border-width: 2px; }
+        .border-yellow-500 { border-color: rgba(234, 179, 8, 0.3); }
+        .border-slate-600 { border-color: #475569; }
+        .border-slate-500 { border-color: #64748b; }
+        
+        .rounded-3xl { border-radius: 1.5rem; }
+        .rounded-2xl { border-radius: 1rem; }
+        .rounded-xl { border-radius: 0.75rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        
+        .p-8 { padding: 2rem; }
+        .p-6 { padding: 1.5rem; }
+        .p-4 { padding: 1rem; }
+        .p-3 { padding: 0.75rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+        
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mr-3 { margin-right: 0.75rem; }
+        .mx-1 { margin-left: 0.25rem; margin-right: 0.25rem; }
+        .mt-4 { margin-top: 1rem; }
+        
+        .w-full { width: 100%; }
+        .flex { display: flex; }
+        .inline-flex { display: inline-flex; }
+        .grid { display: grid; }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .gap-4 { gap: 1rem; }
+        .gap-2 { gap: 0.5rem; }
+        .space-y-4 > * + * { margin-top: 1rem; }
+        .space-y-2 > * + * { margin-top: 0.5rem; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-end { justify-content: flex-end; }
+        
+        .opacity-75 { opacity: 0.75; }
+        .transition-all { transition-property: all; transition-duration: 200ms; }
+        .duration-200 { transition-duration: 200ms; }
+        .hover\:scale-105:hover { transform: scale(1.05); }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            transition: all 0.2s;
+        }
+        button:hover { transform: scale(1.05); }
+        
+        .btn-gradient-green { 
+            background: linear-gradient(to right, #10b981, #059669); 
+            color: white;
+        }
+        .btn-gradient-green:hover { background: linear-gradient(to right, #059669, #047857); }
+        .btn-gradient-orange { 
+            background: linear-gradient(to right, #f97316, #ea580c); 
+            color: white;
+        }
+        .btn-gradient-orange:hover { background: linear-gradient(to right, #ea580c, #c2410c); }
+        .btn-gradient-yellow { 
+            background: linear-gradient(to right, #eab308, #f97316); 
+            color: white;
+        }
+        .btn-gradient-yellow:hover { background: linear-gradient(to right, #f97316, #ea580c); }
+        .btn-gradient-red { 
+            background: linear-gradient(to right, #ef4444, #dc2626); 
+            color: white;
+        }
+        .btn-gradient-red:hover { background: linear-gradient(to right, #dc2626, #b91c1c); }
+        
+        select { 
+            background-color: #374151 !important; 
+            border: 1px solid #64748b;
+            border-radius: 0.75rem;
+            color: white !important;
+        }
+        
+        .reminder-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .reminder-modal {
+            background: linear-gradient(to bottom, #1e40af, #1e3a8a);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            border: 2px solid #fbbf24;
+            max-width: 300px;
+            margin: 1rem;
+        }
+        
+        .blue-bg { background-color: #2563eb; }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <!-- Main Screen -->
+        <div id="mainScreen">
+            <h1 class="text-3xl font-bold text-center mb-8 text-yellow-400">Martial Arts Dojo</h1>
+            
+            <!-- Character Display -->
+            <div class="bg-slate-800 rounded-3xl p-8 mb-6 text-center border border-yellow-500">
+                <div id="characterEmoji" class="text-8xl mb-4">🥚</div>
+                <div class="flex justify-center mb-2">
+                    <span id="star1" class="text-2xl mx-1">☆</span>
+                    <span id="star2" class="text-2xl mx-1">☆</span>
+                    <span id="star3" class="text-2xl mx-1">☆</span>
+                    <span id="star4" class="text-2xl mx-1">☆</span>
+                    <span id="star5" class="text-2xl mx-1">☆</span>
+                </div>
+                <p id="evolutionText" class="text-sm opacity-75">0/5 sterren voor evolutie</p>
+            </div>
+
+            <!-- Expertise Overview -->
+            <div class="bg-slate-800 rounded-3xl p-4 mb-6 border border-slate-600">
+                <h3 class="font-medium mb-3 text-purple-400">Expertise</h3>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between bg-slate-700 p-3 rounded-xl">
+                        <div class="flex items-center">
+                            <span class="mr-3 text-xl">⚔️</span>
+                            <span class="text-blue-200">Tekpi</span>
+                        </div>
+                        <span id="tekpiMinutes" class="text-purple-400 font-bold">0 min</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700 p-3 rounded-xl">
+                        <div class="flex items-center">
+                            <span class="mr-3 text-xl">🔪</span>
+                            <span class="text-blue-200">Machete</span>
+                        </div>
+                        <span id="macheteMinutes" class="text-purple-400 font-bold">0 min</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700 p-3 rounded-xl">
+                        <div class="flex items-center">
+                            <span class="mr-3 text-xl">🪄</span>
+                            <span class="text-blue-200">Staff</span>
+                        </div>
+                        <span id="staffMinutes" class="text-purple-400 font-bold">0 min</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700 p-3 rounded-xl">
+                        <div class="flex items-center">
+                            <span class="mr-3 text-xl">🌀</span>
+                            <span class="text-blue-200">Free Style</span>
+                        </div>
+                        <span id="freestyleMinutes" class="text-purple-400 font-bold">0 min</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start Training Button -->
+            <button onclick="showWeaponSelect()" class="w-full btn-gradient-green text-white font-bold py-4 px-6 rounded-xl text-lg mb-4">
+                ▶️ Kies Activiteit en Start
+            </button>
+
+            <!-- Goals Button -->
+            <div class="flex justify-end">
+                <button onclick="showGoals()" class="btn-gradient-orange text-white font-bold py-3 px-5 rounded-lg text-lg">
+                    🎯
+                </button>
+            </div>
+
+            <!-- Current Goals Display -->
+            <div class="mt-4 text-center text-sm opacity-75">
+                <div id="goalsDisplay">Streak: 5 min • Ster: 10 min</div>
+            </div>
+        </div>
+
+        <!-- Goals Screen -->
+        <div id="goalsScreen" style="display: none;">
+            <h1 class="text-2xl font-bold text-center mb-8 text-yellow-400">🎯 Doelen Instellen</h1>
+            
+            <div class="bg-slate-800 rounded-3xl p-6 mb-6">
+                <div class="mb-6">
+                    <label class="font-medium mb-3 text-blue-300" style="display: block; font-size: 1.125rem;">Minimum minuten voor streak:</label>
+                    <select id="streakMinutesSelect" class="w-full p-4 rounded-xl text-white text-lg">
+                    </select>
+                </div>
+
+                <div class="mb-8">
+                    <label class="font-medium mb-3 text-blue-300" style="display: block; font-size: 1.125rem;">Minimum minuten voor ⭐:</label>
+                    <select id="starMinutesSelect" class="w-full p-4 rounded-xl text-white text-lg">
+                    </select>
+                </div>
+
+                <button onclick="saveGoals()" class="w-full btn-gradient-orange text-white font-bold py-4 px-6 rounded-xl text-lg mb-4">
+                    🎯 Doelen Instellen
+                </button>
+
+                <button onclick="showMain()" class="w-full bg-slate-600 text-white py-3 px-6 rounded-xl">
+                    Annuleren
+                </button>
+            </div>
+        </div>
+
+        <!-- Weapon Selection Screen -->
+        <div id="weaponSelectScreen" style="display: none;">
+            <h1 class="text-2xl font-bold text-center mb-8 text-cyan-400">Kies je Activiteit</h1>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <button onclick="selectWeapon('tekpi', '⚔️', 'Tekpi')" class="bg-slate-700 p-6 rounded-2xl">
+                    <div class="text-4xl mb-3">⚔️</div>
+                    <div class="text-lg font-medium text-white">Tekpi</div>
+                </button>
+                <button onclick="selectWeapon('machete', '🔪', 'Machete')" class="bg-slate-700 p-6 rounded-2xl">
+                    <div class="text-4xl mb-3">🔪</div>
+                    <div class="text-lg font-medium text-white">Machete</div>
+                </button>
+                <button onclick="selectWeapon('staff', '🪄', 'Staff')" class="bg-slate-700 p-6 rounded-2xl">
+                    <div class="text-4xl mb-3">🪄</div>
+                    <div class="text-lg font-medium text-white">Staff</div>
+                </button>
+                <button onclick="selectWeapon('freestyle', '🌀', 'Free Style')" class="bg-slate-700 p-6 rounded-2xl">
+                    <div class="text-4xl mb-3">🌀</div>
+                    <div class="text-lg font-medium text-white">Free Style</div>
+                </button>
+            </div>
+
+            <button onclick="showMain()" class="w-full bg-slate-600 text-white py-3 px-6 rounded-xl">
+                Annuleren
+            </button>
+        </div>
+
+        <!-- Training Screen -->
+        <div id="trainingScreen" style="display: none;">
+            <!-- Selected weapon display -->
+            <div class="text-center mb-6">
+                <div class="blue-bg inline-flex items-center px-6 py-3 rounded-2xl">
+                    <span id="selectedWeaponEmoji" class="text-2xl mr-3">⚔️</span>
+                    <span id="selectedWeaponName" class="text-xl font-bold text-cyan-400">Tekpi</span>
+                </div>
+            </div>
+
+            <!-- Timer Display -->
+            <div class="bg-slate-800 rounded-3xl p-8 mb-6 text-center">
+                <div id="timerDisplay" class="text-6xl font-bold text-cyan-400 mb-4">0:00</div>
+                
+                <div id="streakMessage" class="text-green-400 font-bold mb-2" style="display: none;">
+                    ✓ Minimum tijd bereikt!
+                </div>
+                
+                <div id="starMessage" class="text-yellow-400 font-bold" style="display: none;">
+                    ⭐ Ster verdiend!
+                </div>
+            </div>
+
+            <!-- Control Buttons -->
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <button id="pauseResumeBtn" onclick="togglePause()" class="btn-gradient-yellow font-bold py-4 px-6 rounded-xl text-lg">
+                        ⏸️ Pauze
+                    </button>
+                    
+                    <button onclick="completeSession()" class="btn-gradient-orange text-white font-bold py-4 px-6 rounded-xl text-lg">
+                        🏆 Voltooi
+                    </button>
+                </div>
+                
+                <button onclick="resetTraining()" class="w-full btn-gradient-red text-white font-bold py-4 px-6 rounded-xl text-lg">
+                    ⏹️ Reset
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reminder Overlay -->
+    <div id="reminderOverlay" class="reminder-overlay">
+        <div class="reminder-modal">
+            <div class="text-6xl mb-4">🥋</div>
+            <h2 class="text-xl font-bold mb-4 text-yellow-400">Training Gepauzeerd</h2>
+            <p class="mb-6 text-blue-200">Je bent al een tijdje weg. Klaar om door te gaan?</p>
+            <button onclick="hideReminder()" class="w-full btn-gradient-green text-white font-bold py-3 px-6 rounded-xl">
+                🏃‍♂️ Terug naar Training
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Character evolution levels (cyclical)
+        const characters = ['🥚', '🐣', '🐥', '🙈', '🙉', '🙊', '🐒', '🦧', '🦍', '🐯', '🐅', '🦇', '🐉', '🐲'];
+        
+        // App state
+        let currentScreen = 'main';
+        let streakMinutes = 5;
+        let starMinutes = 10;
+        let characterLevel = 0;
+        let totalStars = 0;
+        let weaponMinutes = { tekpi: 0, machete: 0, staff: 0, freestyle: 0 };
+        
+        // Training state
+        let selectedWeapon = null;
+        let trainingStartTime = null;
+        let pausedTime = 0;
+        let isRunning = false;
+        let isPaused = false;
+        let sessionStarEarned = false;
+        let timerInterval = null;
+        let reminderTimeout = null;
+        let lastActiveTime = Date.now();
+        let pauseStartTime = null;
+
+        // Page Visibility API for background detection
+        let isPageVisible = !document.hidden;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                isPageVisible = false;
+                if (isRunning && !isPaused) {
+                    scheduleReminder();
+                }
+            } else {
+                isPageVisible = true;
+                clearTimeout(reminderTimeout);
+                hideReminder();
+                lastActiveTime = Date.now();
+            }
+        });
+
+        // Initialize app
+        function initApp() {
+            loadData();
+            populateGoalSelects();
+            updateDisplay();
+        }
+
+        // Data persistence
+        function saveData() {
+            const data = {
+                streakMinutes,
+                starMinutes,
+                characterLevel,
+                totalStars,
+                weaponMinutes
+            };
+            localStorage.setItem('martialArtsDojoData', JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem('martialArtsDojoData');
+            if (saved) {
+                const data = JSON.parse(saved);
+                streakMinutes = data.streakMinutes || 5;
+                starMinutes = data.starMinutes || 10;
+                characterLevel = data.characterLevel || 0;
+                totalStars = data.totalStars || 0;
+                weaponMinutes = data.weaponMinutes || { tekpi: 0, machete: 0, staff: 0, freestyle: 0 };
+            }
+        }
+
+        // Populate goal selects
+        function populateGoalSelects() {
+            const streakSelect = document.getElementById('streakMinutesSelect');
+            const starSelect = document.getElementById('starMinutesSelect');
+            
+            // Clear existing options
+            streakSelect.innerHTML = '';
+            starSelect.innerHTML = '';
+            
+            // Streak minutes (1-26)
+            for (let i = 1; i <= 26; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `${i} minuten`;
+                if (i === streakMinutes) option.selected = true;
+                streakSelect.appendChild(option);
+            }
+            
+            // Star minutes (1-30)
+            for (let i = 1; i <= 30; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `${i} minuten`;
+                if (i === starMinutes) option.selected = true;
+                starSelect.appendChild(option);
+            }
+        }
+
+        // Navigation
+        function showScreen(screen) {
+            document.getElementById('mainScreen').style.display = screen === 'main' ? 'block' : 'none';
+            document.getElementById('goalsScreen').style.display = screen === 'goals' ? 'block' : 'none';
+            document.getElementById('weaponSelectScreen').style.display = screen === 'weaponSelect' ? 'block' : 'none';
+            document.getElementById('trainingScreen').style.display = screen === 'training' ? 'block' : 'none';
+            currentScreen = screen;
+        }
+
+        function showMain() { showScreen('main'); }
+        function showGoals() { showScreen('goals'); }
+        function showWeaponSelect() { showScreen('weaponSelect'); }
+
+        // Goals management
+        function saveGoals() {
+            streakMinutes = parseInt(document.getElementById('streakMinutesSelect').value);
+            starMinutes = parseInt(document.getElementById('starMinutesSelect').value);
+            updateDisplay();
+            saveData();
+            showMain();
+        }
+
+        // Training functions
+        function selectWeapon(weaponId, emoji, name) {
+            selectedWeapon = weaponId;
+            document.getElementById('selectedWeaponEmoji').textContent = emoji;
+            document.getElementById('selectedWeaponName').textContent = name;
+            startTraining();
+        }
+
+        function startTraining() {
+            showScreen('training');
+            trainingStartTime = Date.now();
+            pausedTime = 0;
+            isRunning = true;
+            isPaused = false;
+            sessionStarEarned = false;
+            lastActiveTime = Date.now();
+            startTimer();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            if (!isRunning || isPaused) return;
+
+            const now = Date.now();
+            const elapsed = Math.floor((now - trainingStartTime - pausedTime) / 1000);
+            
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            
+            document.getElementById('timerDisplay').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            // Check goals
+            const streakReached = minutes >= streakMinutes;
+            const starReached = minutes >= starMinutes && !sessionStarEarned;
+
+            document.getElementById('streakMessage').style.display = streakReached ? 'block' : 'none';
+            if (streakReached) {
+                document.getElementById('streakMessage').textContent = 
+                    `✓ Minimum tijd bereikt! • ~${minutes} min naar ${document.getElementById('selectedWeaponName').textContent}`;
+            }
+
+            document.getElementById('starMessage').style.display = starReached ? 'block' : 'none';
+
+            // Update last active time if page is visible
+            if (isPageVisible) {
+                lastActiveTime = now;
+            }
+        }
+
+        function togglePause() {
+            if (!isRunning) return;
+
+            if (isPaused) {
+                // Resume
+                isPaused = false;
+                const pauseEndTime = Date.now();
+                pausedTime += pauseEndTime - pauseStartTime;
+                document.getElementById('pauseResumeBtn').textContent = '⏸️ Pauze';
+                lastActiveTime = Date.now();
+                clearTimeout(reminderTimeout);
+                hideReminder();
+            } else {
+                // Pause
+                isPaused = true;
+                pauseStartTime = Date.now();
+                document.getElementById('pauseResumeBtn').textContent = '▶️ Hervat';
+                scheduleReminder();
+            }
+        }
+
+        function scheduleReminder() {
+            clearTimeout(reminderTimeout);
+            reminderTimeout = setTimeout(() => {
+                if ((isPaused || !isPageVisible) && isRunning) {
+                    showReminder();
+                }
+            }, 120000); // 2 minutes
+        }
+
+        function showReminder() {
+            document.getElementById('reminderOverlay').style.display = 'flex';
+        }
+
+        function hideReminder() {
+            document.getElementById('reminderOverlay').style.display = 'none';
+            clearTimeout(reminderTimeout);
+        }
+
+        function completeSession() {
+            if (!isRunning) return;
+
+            const now = Date.now();
+            const totalElapsed = Math.floor((now - trainingStartTime - pausedTime) / 1000);
+            const minutes = Math.floor(totalElapsed / 60);
+
+            // Update weapon expertise
+            weaponMinutes[selectedWeapon] += minutes;
+
+            // Award star if target reached
+            if (minutes >= starMinutes && !sessionStarEarned) {
+                totalStars++;
+                sessionStarEarned = true;
+                
+                // Check for character evolution
+                if (totalStars % 5 === 0) {
+                    characterLevel = (characterLevel + 1) % characters.length;
+                }
+            }
+
+            resetTraining();
+            updateDisplay();
+            saveData();
+        }
+
+        function resetTraining() {
+            isRunning = false;
+            isPaused = false;
+            sessionStarEarned = false;
+            selectedWeapon = null;
+            clearInterval(timerInterval);
+            clearTimeout(reminderTimeout);
+            hideReminder();
+            showMain();
+        }
+
+        // Update display
+        function updateDisplay() {
+            // Character
+            document.getElementById('characterEmoji').textContent = characters[characterLevel];
+            
+            // Stars
+            const starsInCurrentLevel = totalStars % 5;
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`star${i}`).textContent = i <= starsInCurrentLevel ? '⭐' : '☆';
+            }
+            document.getElementById('evolutionText').textContent = `${starsInCurrentLevel}/5 sterren voor evolutie`;
+            
+            // Expertise
+            document.getElementById('tekpiMinutes').textContent = `${weaponMinutes.tekpi} min`;
+            document.getElementById('macheteMinutes').textContent = `${weaponMinutes.machete} min`;
+            document.getElementById('staffMinutes').textContent = `${weaponMinutes.staff} min`;
+            document.getElementById('freestyleMinutes').textContent = `${weaponMinutes.freestyle} min`;
+            
+            // Goals
+            document.getElementById('goalsDisplay').textContent = `Streak: ${streakMinutes} min • Ster: ${starMinutes} min`;
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', initApp);
+    </script>
+</body>
+</html>
